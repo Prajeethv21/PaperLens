@@ -1,15 +1,7 @@
 {
   "version": 2,
-  "name": "research-reviewer-frontend",
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/dist"
-      }
-    }
-  ],
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -18,10 +10,5 @@
   ],
   "env": {
     "VITE_API_URL": "https://paperlens-naby.onrender.com"
-  },
-  "build": {
-    "env": {
-      "VITE_API_URL": "https://paperlens-naby.onrender.com"
-    }
   }
 }
