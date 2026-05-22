@@ -172,6 +172,27 @@ python main.py
 - **API Docs:** http://localhost:8000/docs
 - **Health Check:** http://localhost:8000/health
 
+### Notes about ChromaDB and local development
+
+- The project normally uses ChromaDB for the RAG vector store. On Windows,
+  installing `chromadb` can require building native extensions (`chroma-hnswlib`),
+  which needs Microsoft C++ Build Tools. To make local development easier,
+  the code now supports a fallback in-memory vector store using
+  `sentence-transformers` + `numpy` when `chromadb` is not available.
+
+- If you want persistent, production-ready vector storage with ChromaDB:
+  1. Install Microsoft C++ Build Tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+  2. Re-add `chromadb==0.5.23` to `backend/requirements.txt` and run `pip install -r requirements.txt`.
+
+- For development without ChromaDB, no additional steps are required — the
+  backend will automatically use the in-memory fallback and remain functional.
+
+### Security note
+
+- During startup the app may warn that `JWT_SECRET_KEY` is too short. For
+  production, set `JWT_SECRET_KEY` in `backend/.env` to a random string
+  at least 32 characters long.
+
 ### Frontend Setup
 **1. Navigate to frontend directory and install dependencies:**
 ```bash
