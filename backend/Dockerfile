@@ -23,7 +23,7 @@ RUN mkdir -p /data/chroma_data
 ENV CHROMA_PERSIST_DIR=/data/chroma_data
 
 ENV PORT=8000
-EXPOSE ${PORT}
+EXPOSE 8000
 
 # Start the app with uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT}", "--workers", "1"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
