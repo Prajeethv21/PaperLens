@@ -3,7 +3,7 @@ uvicorn==0.27.1
 python-multipart==0.0.9
 python-dotenv==1.0.1
 pydantic==2.6.1
-PyMuPDF==1.23.26
+PyMuPDF>=1.24.0
 sentence-transformers==2.3.1
 openai==1.12.0
 httpx==0.27.0

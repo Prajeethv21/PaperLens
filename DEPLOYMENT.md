@@ -201,12 +201,14 @@ The project includes `vercel.json`:
    - Choose your repository
 
 3. **Configure Service:**
-   Railway should deploy from the repository root. This project now includes:
-   - `requirements.txt` at the root, which points to `backend/requirements.txt`
-   - `start.sh`, which launches Uvicorn from the `backend` directory
-   - `Procfile`, which points Railway to `bash start.sh`
+   Set the **Root Directory** to `backend`.
 
-   If you want to set the service manually, use:
+   Railway will now use the backend-specific config files:
+   - `backend/runtime.txt` pins Python to `3.11.9`
+   - `backend/nixpacks.toml` installs with Python 3.11
+   - `backend/start.sh` launches Uvicorn from the backend directory
+
+   If Railway asks for manual commands, use:
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `bash start.sh`
 
@@ -217,6 +219,8 @@ The project includes `vercel.json`:
    APP_ENV=production
    ALLOWED_ORIGINS=https://your-frontend.vercel.app
    ```
+
+   Also ensure the service uses Python 3.11.9 through `backend/runtime.txt`.
 
 5. **Add Persistent Volume:**
    - Go to Service → Variables → Volumes
@@ -232,7 +236,7 @@ The project includes `vercel.json`:
    ```python
    @app.get("/health")
    async def health_check():
-      return {"status": "healthy"}
+       return {"status": "healthy"}
    ```
 
 ### Option 2: Render
