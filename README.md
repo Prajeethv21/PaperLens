@@ -193,6 +193,28 @@ python main.py
   production, set `JWT_SECRET_KEY` in `backend/.env` to a random string
   at least 32 characters long.
 
+### Deploying the backend to Render (recommended)
+
+Follow these steps to deploy the backend on Render as a Docker Web Service.
+
+1. Push your repository to GitHub (already done).
+2. In Render, create a new service and choose "Web Service".
+3. Select "Docker" as the environment and connect your GitHub repo/branch.
+4. Set the Dockerfile path to `backend/Dockerfile`.
+5. Set the `PORT` environment variable to `8000` (Render supplies a port, but this keeps it explicit).
+6. Add the required environment variables in the Render dashboard:
+  - `OPENAI_API_KEY` (your OpenAI API key)
+  - `JWT_SECRET_KEY` (a secure random string, min 32 chars)
+  - `APP_ENV=production`
+  - `ALLOWED_ORIGINS` (e.g., `https://your-frontend.vercel.app`)
+7. (Optional) Attach persistent disk storage in Render and set `CHROMA_PERSIST_DIR` to the mounted path (e.g. `/data/chroma_data`) if you want persistent vector storage.
+8. Deploy and monitor the logs. The service will run the `backend/Dockerfile` image and start Uvicorn.
+
+Notes:
+- Using the Docker deployment avoids host-specific build problems (e.g., MSVC on Windows) because the container builds in a Linux environment.
+- If you prefer not to use Docker, you can instead create a Render Python service and set the Build Command to `pip install -r backend/requirements.txt` and the Start Command to `uvicorn main:app --host 0.0.0.0 --port $PORT` with the service's root set to the `backend` directory.
+
+
 ### Frontend Setup
 **1. Navigate to frontend directory and install dependencies:**
 ```bash
